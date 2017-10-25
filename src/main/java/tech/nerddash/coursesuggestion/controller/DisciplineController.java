@@ -19,7 +19,7 @@ import tech.nerddash.coursesuggestion.model.Discipline;
 
 @Controller
 public class DisciplineController extends AbstractControllerClass<Discipline> {
-	
+
 	@Inject
 	public DisciplineController(Validator validator, Result result, DisciplineDao dao) {
 		super(validator, result, dao);
@@ -47,7 +47,7 @@ public class DisciplineController extends AbstractControllerClass<Discipline> {
 
 	@Delete("/discipline/{discipline.id}")
 	public boolean delete(Discipline discipline) {
-		
+
 		if (dao.delete(discipline)) {
 			result.use(json()).from(discipline).recursive().serialize();
 			return true;
@@ -74,6 +74,11 @@ public class DisciplineController extends AbstractControllerClass<Discipline> {
 		discipline = dao.update(discipline);
 		result.use(json()).from(discipline).recursive().serialize();
 		return discipline;
+	}
+
+	@Get("/discipline/resetTable")
+	public void reset() {
+		super.reset(Discipline.class);
 	}
 
 }

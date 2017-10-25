@@ -31,5 +31,9 @@ public abstract class AbstractControllerClass<E extends AbstractEntityClass> {
 		validator.validate(entityClass);
 		validator.onErrorUse(json()).from(validator.getErrors(), ERROR_TAG).serialize();
 	}
+	
+	protected void reset(Class<E> entityClass) {
+		dao.resetTable(entityClass);		
+	}
 
 }

@@ -75,5 +75,10 @@ public class CourseController extends AbstractControllerClass<Course> {
 		result.use(json()).from(course).recursive().serialize();
 		return course;
 	}
+	
+	@Get("/course/resetTable")
+	public void reset() {
+		super.reset(Course.class);
+	}
 
 }

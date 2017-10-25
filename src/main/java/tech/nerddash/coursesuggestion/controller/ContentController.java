@@ -20,6 +20,7 @@ import tech.nerddash.coursesuggestion.model.Content;
 
 @Controller
 public class ContentController extends AbstractControllerClass<Content>{
+	
 	@Inject
 	public ContentController(Validator validator, Result result, ContentDao dao) {
 		super(validator, result, dao);
@@ -74,6 +75,11 @@ public class ContentController extends AbstractControllerClass<Content>{
 		content = dao.update(content);
 		result.use(json()).from(content).recursive().serialize();
 		return content;
+	}
+	
+	@Get("/content/resetTable")
+	public void reset() {
+		super.reset(Content.class);
 	}
 
 }

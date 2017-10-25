@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.util.List;
 
 import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
@@ -22,14 +23,16 @@ public class Course extends AbstractEntityClass implements Serializable{
 
 
 	@NotNull @NotEmpty
+	@Column(unique = true)
 	private String name;
 	
-	@OneToMany(targetEntity = Discipline.class, cascade=CascadeType.ALL)
+	@OneToMany(targetEntity = Discipline.class, cascade=CascadeType.ALL, orphanRemoval=true)
 	private List<Discipline> disciplines;
 	
 	@NotNull
 	private Level level = Level.UPPER;
 
+	
 	public String getName() {
 		return name;
 	}
