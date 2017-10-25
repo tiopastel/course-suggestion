@@ -4,9 +4,6 @@ import java.io.Serializable;
 import java.util.List;
 
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
@@ -21,15 +18,12 @@ public class Course extends AbstractEntityClass implements Serializable{
 	 * 
 	 */
 	private static final long serialVersionUID = 9182334921533574136L;
-	
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private long id;
+
 
 	@NotNull @NotEmpty
 	private String name;
 	
-	@ManyToOne
+	@ManyToOne(targetEntity = Discipline.class)
 	private List<Discipline> disciplines;
 	
 	@NotNull
@@ -50,8 +44,7 @@ public class Course extends AbstractEntityClass implements Serializable{
 	public void setDisciplines(List<Discipline> disciplines) {
 		this.disciplines = disciplines;
 	}
-	
-	
+		
 	public enum Level {
 		PRIMARY, LOWER, UPPER
 	}
@@ -64,4 +57,5 @@ public class Course extends AbstractEntityClass implements Serializable{
 	public void setLevel(Level level) {
 		this.level = level;
 	}
+
 }

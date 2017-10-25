@@ -36,6 +36,7 @@ public abstract class AbstractDaoClass<E extends AbstractEntityClass> {
 	}
 
 	public boolean delete(E entity) {
+		entity = em.merge(entity);
 		this.em.remove(entity);
 		return true;
 	}

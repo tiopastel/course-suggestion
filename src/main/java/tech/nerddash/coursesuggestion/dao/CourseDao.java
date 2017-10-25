@@ -7,7 +7,7 @@ import javax.persistence.EntityManager;
 import tech.nerddash.coursesuggestion.model.Course;
 
 @RequestScoped
-public class CourseDao extends AbstractDaoClass<Course>{
+public class CourseDao extends AbstractDaoClass<Course> {
 
 	@Inject
 	public CourseDao(EntityManager em) {
@@ -18,5 +18,6 @@ public class CourseDao extends AbstractDaoClass<Course>{
 	public CourseDao() {
 		this(null);
 	}
+
 
 }
