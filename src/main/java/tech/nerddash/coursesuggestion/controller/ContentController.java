@@ -8,6 +8,7 @@ import java.util.List;
 import javax.inject.Inject;
 
 import br.com.caelum.vraptor.Consumes;
+import br.com.caelum.vraptor.Controller;
 import br.com.caelum.vraptor.Delete;
 import br.com.caelum.vraptor.Get;
 import br.com.caelum.vraptor.Post;
@@ -17,6 +18,7 @@ import br.com.caelum.vraptor.validator.Validator;
 import tech.nerddash.coursesuggestion.dao.ContentDao;
 import tech.nerddash.coursesuggestion.model.Content;
 
+@Controller
 public class ContentController extends AbstractControllerClass<Content>{
 	@Inject
 	public ContentController(Validator validator, Result result, ContentDao dao) {

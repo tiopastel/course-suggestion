@@ -3,8 +3,9 @@ package tech.nerddash.coursesuggestion.model;
 import java.io.Serializable;
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
-import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 
@@ -12,17 +13,18 @@ import org.hibernate.validator.constraints.NotEmpty;
 
 @Entity
 @Table(name = "DICIPLINES")
-public class Discipline extends AbstractEntityClass implements Serializable{
+public class Discipline extends AbstractEntityClass implements Serializable {
 
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 902477685423812135L;
 
-	@NotNull @NotEmpty
+	@NotNull
+	@NotEmpty
 	private String name;
-	
-	@ManyToOne(targetEntity = Content.class)
+
+	@OneToMany(targetEntity = Content.class, cascade = CascadeType.ALL)
 	private List<Content> contents;
 
 	public String getName() {
@@ -41,5 +43,9 @@ public class Discipline extends AbstractEntityClass implements Serializable{
 		this.contents = contents;
 	}
 
-	
+	@Override
+	public String toString() {
+		return "Discipline [id=" + id + ", name=" + name + ", contents=" + contents + "]";
+	}
+
 }

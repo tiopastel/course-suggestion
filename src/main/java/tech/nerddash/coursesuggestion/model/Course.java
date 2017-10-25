@@ -3,8 +3,9 @@ package tech.nerddash.coursesuggestion.model;
 import java.io.Serializable;
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
-import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 
@@ -23,7 +24,7 @@ public class Course extends AbstractEntityClass implements Serializable{
 	@NotNull @NotEmpty
 	private String name;
 	
-	@ManyToOne(targetEntity = Discipline.class)
+	@OneToMany(targetEntity = Discipline.class, cascade=CascadeType.ALL)
 	private List<Discipline> disciplines;
 	
 	@NotNull
@@ -57,5 +58,12 @@ public class Course extends AbstractEntityClass implements Serializable{
 	public void setLevel(Level level) {
 		this.level = level;
 	}
+
+	@Override
+	public String toString() {
+		return "Course [id=" + id + ", name=" + name + ", disciplines=" + disciplines + ", level=" + level + "]";
+	}
+	
+	
 
 }
