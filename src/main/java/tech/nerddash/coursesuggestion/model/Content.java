@@ -12,20 +12,21 @@ import org.hibernate.validator.constraints.NotEmpty;
 
 @Entity
 @Table(name = "CONTENTS")
-public class Content extends AbstractEntityClass implements Serializable{
+public class Content extends AbstractEntityClass implements Serializable {
 
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = -3220120574156561470L;
-	
-	@NotNull @NotEmpty
+
+	@NotNull
+	@NotEmpty
 	private String name;
-	
+
 	private String description;
-	
+
 	@Lob
-	@Column(length=512)
+	@Column(length = 512)
 	private String justification;
 
 	public String getName() {
@@ -57,6 +58,5 @@ public class Content extends AbstractEntityClass implements Serializable{
 		return "Content [id=" + id + ", name=" + name + ", description=" + description + ", justification="
 				+ justification + "]";
 	}
-
 
 }

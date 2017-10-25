@@ -24,7 +24,7 @@ public class Discipline extends AbstractEntityClass implements Serializable {
 	@NotEmpty
 	private String name;
 
-	@OneToMany(targetEntity = Content.class, cascade = CascadeType.ALL)
+	@OneToMany(targetEntity = Content.class, cascade = CascadeType.ALL, orphanRemoval=true)
 	private List<Content> contents;
 
 	public String getName() {

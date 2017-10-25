@@ -4,6 +4,7 @@ import java.util.List;
 
 import javax.enterprise.context.RequestScoped;
 import javax.persistence.EntityManager;
+import javax.persistence.Table;
 import javax.persistence.TypedQuery;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
@@ -56,6 +57,15 @@ public abstract class AbstractDaoClass<E extends AbstractEntityClass> {
 		TypedQuery<E> typedQuery = em.createQuery(query);
 
 		return typedQuery.getResultList();
+	}
+	
+	public void resetTable(Class<E> entityClass) {
+
+		String tableName = entityClass.getAnnotation(Table.class).name();
+
+		em.createNativeQuery("DELETE FROM " + tableName + " WHERE id > 0").executeUpdate();
+		em.createNativeQuery("ALTER TABLE " + tableName + "  ALTER COLUMN id RESTART WITH 1;").executeUpdate();
+		
 	}
 
 }
