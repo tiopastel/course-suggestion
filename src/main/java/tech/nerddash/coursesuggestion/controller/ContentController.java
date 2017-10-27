@@ -21,9 +21,12 @@ import tech.nerddash.coursesuggestion.model.Content;
 @Controller
 public class ContentController extends AbstractControllerClass<Content>{
 	
+	private final ContentDao dao;
+
 	@Inject
 	public ContentController(Validator validator, Result result, ContentDao dao) {
-		super(validator, result, dao);
+		super(validator, result);
+		this.dao = dao;
 	}
 
 	@Deprecated
@@ -34,7 +37,7 @@ public class ContentController extends AbstractControllerClass<Content>{
 	@Get({ "/content", "/content/" })
 	public List<Content> list() {
 		List<Content> contents = dao.listAll(Content.class);
-		result.use(json()).from(contents).recursive().serialize();
+		result.use(json()).from(contents).serialize();
 		return contents;
 
 	}
@@ -42,7 +45,7 @@ public class ContentController extends AbstractControllerClass<Content>{
 	@Get("/content/{content.id}")
 	public Content get(Content content) {
 		content = dao.get(Content.class, content.getId());
-		result.use(json()).from(content).recursive().serialize();
+		useJson(content);
 		return content;
 	}
 
@@ -50,7 +53,7 @@ public class ContentController extends AbstractControllerClass<Content>{
 	public boolean delete(Content content) {
 		
 		if (dao.delete(content)) {
-			result.use(json()).from(content).recursive().serialize();
+			useJson(content);
 			return true;
 		}
 		return false;
@@ -63,7 +66,7 @@ public class ContentController extends AbstractControllerClass<Content>{
 		validate(content);
 
 		content = dao.insert(content);
-		result.use(json()).from(content).recursive().serialize();
+		useJson(content);
 		return content;
 	}
 
@@ -73,13 +76,14 @@ public class ContentController extends AbstractControllerClass<Content>{
 
 		validate(content);
 		content = dao.update(content);
-		result.use(json()).from(content).recursive().serialize();
+		useJson(content);
 		return content;
 	}
-	
-	@Get("/content/resetTable")
-	public void reset() {
-		super.reset(Content.class);
-	}
 
+	private void useJson(Content content) {
+		result.use(json()).from(content).recursive().exclude("discipline.contents").exclude("discipline.course.disciplines").serialize();
+	}
+	
+	
+	
 }

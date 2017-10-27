@@ -20,9 +20,12 @@ import tech.nerddash.coursesuggestion.model.Discipline;
 @Controller
 public class DisciplineController extends AbstractControllerClass<Discipline> {
 
+	private final DisciplineDao dao;
+
 	@Inject
 	public DisciplineController(Validator validator, Result result, DisciplineDao dao) {
-		super(validator, result, dao);
+		super(validator, result);
+		this.dao = dao;
 	}
 
 	@Deprecated
@@ -33,7 +36,7 @@ public class DisciplineController extends AbstractControllerClass<Discipline> {
 	@Get({ "/discipline", "/discipline/" })
 	public List<Discipline> list() {
 		List<Discipline> disciplines = dao.listAll(Discipline.class);
-		result.use(json()).from(disciplines).recursive().serialize();
+		result.use(json()).from(disciplines).exclude("course.disciplines").serialize();
 		return disciplines;
 
 	}
@@ -41,7 +44,7 @@ public class DisciplineController extends AbstractControllerClass<Discipline> {
 	@Get("/discipline/{discipline.id}")
 	public Discipline get(Discipline discipline) {
 		discipline = dao.get(Discipline.class, discipline.getId());
-		result.use(json()).from(discipline).recursive().serialize();
+		useJson(discipline);
 		return discipline;
 	}
 
@@ -49,7 +52,7 @@ public class DisciplineController extends AbstractControllerClass<Discipline> {
 	public boolean delete(Discipline discipline) {
 
 		if (dao.delete(discipline)) {
-			result.use(json()).from(discipline).recursive().serialize();
+			useJson(discipline);
 			return true;
 		}
 		return false;
@@ -60,9 +63,9 @@ public class DisciplineController extends AbstractControllerClass<Discipline> {
 	public Discipline insert(Discipline discipline) {
 
 		validate(discipline);
-
+		
 		discipline = dao.insert(discipline);
-		result.use(json()).from(discipline).recursive().serialize();
+		useJson(discipline);
 		return discipline;
 	}
 
@@ -72,13 +75,12 @@ public class DisciplineController extends AbstractControllerClass<Discipline> {
 
 		validate(discipline);
 		discipline = dao.update(discipline);
-		result.use(json()).from(discipline).recursive().serialize();
+		useJson(discipline);
 		return discipline;
 	}
 
-	@Get("/discipline/resetTable")
-	public void reset() {
-		super.reset(Discipline.class);
+	private void useJson(Discipline discipline) {
+		result.use(json()).from(discipline).recursive().exclude("course.disciplines").exclude("contents.discipline").serialize();
 	}
 
 }

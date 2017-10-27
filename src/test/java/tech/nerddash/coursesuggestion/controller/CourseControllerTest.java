@@ -1,10 +1,7 @@
 package tech.nerddash.coursesuggestion.controller;
 
 import static io.restassured.RestAssured.given;
-import static org.junit.Assert.*;
-
-import java.util.ArrayList;
-import java.util.List;
+import static org.junit.Assert.assertEquals;
 
 import org.junit.After;
 import org.junit.Before;
@@ -20,8 +17,6 @@ public class CourseControllerTest extends AbstractRestApiTest{
 
 	private Content content;
 	private Discipline discipline;
-	private List<Content> contents = new ArrayList<>();
-	private List<Discipline> disciplines = new ArrayList<>();
 	private Course course;
 	private JsonPath retorno;
 
@@ -29,21 +24,23 @@ public class CourseControllerTest extends AbstractRestApiTest{
 	public void setUp() throws Exception {
 		
 		content = new Content();
+		discipline = new Discipline();
+		course = new Course();
+
 		content.setName("Docker");
 		content.setDescription(" Docker provides an additional layer of abstraction and automation of operating-system-level virtualization on Windows and Linux.");
 		content.setJustification("Docker is a tecnologie used in many applications in the actual development cenario.");
+		content.setDiscipline(discipline);
 		
-		contents.add(content);
-		
-		discipline = new Discipline();
 		discipline.setName("Server Implementation");
-		discipline.setContents(contents);
+		discipline.setDescription("In this discipline students lear how to implements servers");
+		discipline.setJustification("Helps students to understand how and way to implements servers");
 		
-		disciplines.add(discipline);
-		
-		course = new Course();
 		course.setName("Web Development");
-		course.setDisciplines(disciplines);		
+		
+		course.setDescription(
+				"Web development is a broad term for the work involved in developing a web site for the Internet (World Wide Web) or an intranet (a private network). Web development can range from developing the simplest static single page of plain text to the most complex web-based internet applications (or just 'web apps') electronic businesses, and social network services. A more comprehensive list of tasks to which web development commonly refers, may include web engineering, web design, web content development, client liaison, client-side/server-side scripting, web server and network security configuration, and e-commerce development. Among web professionals, \"web development\" usually refers to the main non-design aspects of building web sites: writing markup and coding. Most recently Web development has come to mean the creation of content management systems or CMS.");
+		course.setJustification("Becouse We can");
 		
 		retorno = given().header("Accept", "application/json").contentType("application/json").body(course).expect()
 				.statusCode(200).when().post("/course").andReturn().jsonPath();

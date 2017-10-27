@@ -37,7 +37,6 @@ public class DisciplineControllerTest extends AbstractRestApiTest {
 
 		discipline = new Discipline();
 		discipline.setName("Server Implementation");
-		discipline.setContents(contents);
 
 		retorno = given().header("Accept", "application/json").contentType("application/json").body(discipline).expect()
 				.statusCode(200).when().post("/discipline").andReturn().jsonPath();
