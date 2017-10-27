@@ -1,15 +1,14 @@
 package tech.nerddash.coursesuggestion.model;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
-import javax.validation.constraints.NotNull;
-
-import org.hibernate.validator.constraints.NotEmpty;
 
 @Entity
 @Table(name = "DICIPLINES")
@@ -20,32 +19,31 @@ public class Discipline extends AbstractEntityClass implements Serializable {
 	 */
 	private static final long serialVersionUID = 902477685423812135L;
 
-	@NotNull
-	@NotEmpty
-	private String name;
 
-	@OneToMany(targetEntity = Content.class, cascade = CascadeType.ALL, orphanRemoval=true)
-	private List<Content> contents;
+	@ManyToOne
+	private Course course;
+	
 
-	public String getName() {
-		return name;
+	@OneToMany(mappedBy = "discipline", fetch = FetchType.LAZY, orphanRemoval = true)
+	private List<Content> contents = new ArrayList<Content>();
+	
+	public Course getCourse() {
+		return course;
 	}
 
-	public void setName(String name) {
-		this.name = name;
+	public void setCourse(Course course) {
+		this.course = course;
 	}
 
-	public List<Content> getContents() {
-		return contents;
-	}
-
-	public void setContents(List<Content> contents) {
-		this.contents = contents;
-	}
 
 	@Override
 	public String toString() {
-		return "Discipline [id=" + id + ", name=" + name + ", contents=" + contents + "]";
+		return "Discipline [course=" + course + ", id=" + id + ", name=" + name
+				+ ", description=" + description + ", justification=" + justification + "]";
 	}
+
+
+	
+	
 
 }

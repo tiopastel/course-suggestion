@@ -20,9 +20,12 @@ import tech.nerddash.coursesuggestion.model.Course;
 @Controller
 public class CourseController extends AbstractControllerClass<Course> {
 
+	private final CourseDao dao;
+
 	@Inject
 	public CourseController(Validator validator, Result result, CourseDao dao) {
-		super(validator, result, dao);
+		super(validator, result);
+		this.dao = dao;
 	}
 
 	@Deprecated
@@ -33,7 +36,7 @@ public class CourseController extends AbstractControllerClass<Course> {
 	@Get({ "/course", "/course/" })
 	public List<Course> list() {
 		List<Course> courses = dao.listAll(Course.class);
-		result.use(json()).from(courses).recursive().serialize();
+		result.use(json()).from(courses).exclude("disciplines").serialize();
 		return courses;
 
 	}
@@ -41,7 +44,7 @@ public class CourseController extends AbstractControllerClass<Course> {
 	@Get("/course/{course.id}")
 	public Course get(Course course) {
 		course = dao.get(Course.class, course.getId());
-		result.use(json()).from(course).recursive().serialize();
+		useJson(course);
 		return course;
 	}
 
@@ -49,7 +52,7 @@ public class CourseController extends AbstractControllerClass<Course> {
 	public boolean delete(Course course) {
 		
 		if (dao.delete(course)) {
-			result.use(json()).from(course).recursive().serialize();
+			useJson(course);
 			return true;
 		}
 		return false;
@@ -62,7 +65,7 @@ public class CourseController extends AbstractControllerClass<Course> {
 		validate(course);
 
 		course = dao.insert(course);
-		result.use(json()).from(course).recursive().serialize();
+		useJson(course);
 		return course;
 	}
 
@@ -72,13 +75,12 @@ public class CourseController extends AbstractControllerClass<Course> {
 
 		validate(course);
 		course = dao.update(course);
-		result.use(json()).from(course).recursive().serialize();
+		useJson(course);
 		return course;
 	}
 	
-	@Get("/course/resetTable")
-	public void reset() {
-		super.reset(Course.class);
+	private void useJson(Course course) {
+		result.use(json()).from(course).recursive().exclude("disciplines.course").exclude("disciplines.contents.discipline").serialize();
 	}
-
+	
 }

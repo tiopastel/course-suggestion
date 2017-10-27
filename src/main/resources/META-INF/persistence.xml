@@ -8,6 +8,18 @@
 		<class>tech.nerddash.coursesuggestion.model.Course</class>
 		<class>tech.nerddash.coursesuggestion.model.Discipline</class>
 		<class>tech.nerddash.coursesuggestion.model.Content</class>
+		
+<!-- 		<properties> -->
+<!-- 			<property name="javax.persistence.jdbc.driver" value="com.mysql.jdbc.Driver" /> -->
+<!-- 			<property name="javax.persistence.jdbc.url" value="jdbc:mysql://mariadb:3306/db_coursesuggestion"/> -->
+<!-- 			<property name="javax.persistence.jdbc.user" value="mariadb"/> -->
+<!-- 			<property name="javax.persistence.jdbc.password" value="100%xpt0"/> -->
+<!-- 			<property name="hibernate.connection.pool_size" value="10"/> -->
+<!-- 			<property name="hibernate.hbm2ddl.auto" value="update" /> -->
+<!-- 			<property name="hibernate.dialect" value="org.hibernate.dialect.MariaDBDialect"/> -->
+<!-- 			<property name="show_sql" value="true"/> -->
+<!-- 			<property name="hibernate.temp.use_jdbc_metadata_defaults" value="false"/> -->
+<!-- 		</properties> -->
 
 		<properties>
 			<property name="javax.persistence.jdbc.driver" value="org.h2.Driver" />
