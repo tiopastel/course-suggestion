@@ -1,7 +1,7 @@
 <template>
   <div>
     <h1>{{ title }}</h1>
-    <p>Dê sugestões nos cursos do IFTM de Uberaba. Para começar insira seu nome e-mail abaixo:</p>
+    <p>Dê sugestões nos cursos do IFTM de Uberaba. Para começar insira seu nome e e-mail abaixo:</p>
     <form>
       <input v-model="name" placeholder="Nome"><br>
       <input v-model="email" placeholder="E-mail"><br>
@@ -18,7 +18,9 @@ export default {
       institutionImage: {
         src: '',
         alt: ''
-      }
+      },
+      name: '',
+      email: ''
     }
   }
 }
