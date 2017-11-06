@@ -1,6 +1,5 @@
 package tech.nerddash.coursesuggestion.model;
 
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -12,7 +11,7 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "DICIPLINES")
-public class Discipline extends AbstractEntityClass implements Serializable {
+public class Discipline extends AbstractEntityClass {
 
 	/**
 	 * 

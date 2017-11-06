@@ -36,7 +36,7 @@ public class CourseController extends AbstractControllerClass<Course> {
 	@Get({ "/course", "/course/" })
 	public List<Course> list() {
 		List<Course> courses = dao.listAll(Course.class);
-		result.use(json()).from(courses).exclude("disciplines").serialize();
+		result.use(json()).from(courses).recursive().exclude("disciplines.course").exclude("disciplines.contents.discipline").serialize();
 		return courses;
 
 	}

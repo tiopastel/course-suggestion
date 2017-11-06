@@ -5,7 +5,6 @@ package tech.nerddash.coursesuggestion.controller;
 import static io.restassured.RestAssured.given;
 import static org.junit.Assert.assertEquals;
 
-import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -20,6 +19,7 @@ public class ContentControllerTest extends AbstractRestApiTest {
 
 	@Before
 	public void setUp() throws Exception {
+		
 
 		content = new Content();
 		content.setName("Docker");
@@ -33,10 +33,6 @@ public class ContentControllerTest extends AbstractRestApiTest {
 
 	}
 
-	@After
-	public void tearDown() throws Exception {
-		given().get("/content/resetTable");
-	}
 
 	@Test
 	public void testInsert() {

@@ -1,7 +1,5 @@
 package tech.nerddash.coursesuggestion.model;
 
-import java.io.Serializable;
-
 import javax.persistence.Entity;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
@@ -9,7 +7,7 @@ import javax.validation.constraints.NotNull;
 
 @Entity
 @Table(name = "CONTENTS")
-public class Content extends AbstractEntityClass implements Serializable {
+public class Content extends AbstractEntityClass {
 
 	/**
 	 * 

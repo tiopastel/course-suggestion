@@ -1,6 +1,5 @@
 package tech.nerddash.coursesuggestion.model;
 
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -15,7 +14,7 @@ import com.google.gson.annotations.Expose;
 
 @Entity
 @Table(name = "COURSES", uniqueConstraints={@UniqueConstraint(columnNames={"name"})})
-public class Course extends AbstractEntityClass implements Serializable{
+public class Course extends AbstractEntityClass {
 
 	/**
 	 * 
