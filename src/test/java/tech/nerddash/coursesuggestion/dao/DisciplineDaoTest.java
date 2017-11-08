@@ -8,57 +8,59 @@ import org.junit.Test;
 import org.mockito.junit.MockitoJUnit;
 import org.mockito.junit.MockitoRule;
 
-import tech.nerddash.coursesuggestion.model.Course;
+import tech.nerddash.coursesuggestion.model.Discipline;
 
-public class CourseDaoTest extends AbstractRepositoryTest {
+
+
+public class DisciplineDaoTest extends AbstractRepositoryTest {
 
 	@Rule
 	public MockitoRule rule = MockitoJUnit.rule();
-	private CourseDao courseDao;
-	private Course course;
+	private DisciplineDao disciplineDao;
+	private Discipline discipline;
 
 	@Before
 	public void setUp() throws Exception {
 		
-		course = new Course();
-		course.setName("Web Development");
-		course.setDescription(
+		discipline = new Discipline();
+		discipline.setName("Web Development");
+		discipline.setDescription(
 				"Web development is a broad term for the work involved in developing a web site for the Internet (World Wide Web) or an intranet (a private network). Web development can range from developing the simplest static single page of plain text to the most complex web-based internet applications (or just 'web apps') electronic businesses, and social network services. A more comprehensive list of tasks to which web development commonly refers, may include web engineering, web design, web content development, client liaison, client-side/server-side scripting, web server and network security configuration, and e-commerce development. Among web professionals, \"web development\" usually refers to the main non-design aspects of building web sites: writing markup and coding. Most recently Web development has come to mean the creation of content management systems or CMS.");
-		course.setJustification("Becouse We can");
+		discipline.setJustification("Becouse We can");
 
-		courseDao = new CourseDao(em);
+		disciplineDao = new DisciplineDao(em);
 		
 		/*
 		 * Insere ao início de cada testes
 		 */
 
-		courseDao.insert(course);
+		disciplineDao.insert(discipline);
 		
-		entityObject = course;
+		entityObject = discipline;
 		
 	}
 
 	@Test
 	public void testaInsert() {
-		assertEquals("Não foi inserido", "Web Development", courseDao.get(Course.class, 1L).getName());
+		assertEquals("Não foi inserido", "Web Development", disciplineDao.get(Discipline.class, 1L).getName());
 
 	}
 	
 	@Test
 	public void testaUpdate() {
 		
-		course.setName("Database Development");
+		discipline.setName("Database Development");
 		
-		course = courseDao.update(course);
+		discipline = disciplineDao.update(discipline);
 		
-		assertEquals("Não pode ser atualizado", "Database Development", courseDao.get(Course.class, 1L).getName());
+		assertEquals("Não pode ser atualizado", "Database Development", disciplineDao.get(Discipline.class, 1L).getName());
 
 	}
 	
 	@Test
 	public void testaGet() {
 		
-		assertEquals("Não foi possível buscar.", "Web Development", courseDao.get(Course.class, 1L).getName());
+		assertEquals("Não foi possível buscar.", "Web Development", disciplineDao.get(Discipline.class, 1L).getName());
 
 	}
 	
@@ -66,9 +68,9 @@ public class CourseDaoTest extends AbstractRepositoryTest {
 	public void testaDelete() {
 		
 		
-		courseDao.delete(course);
+		disciplineDao.delete(discipline);
 		
-		assertEquals("Não pode ser apagado", null, courseDao.get(Course.class, 1L));
+		assertEquals("Não pode ser apagado", null, disciplineDao.get(Discipline.class, 1L));
 
 	}
 

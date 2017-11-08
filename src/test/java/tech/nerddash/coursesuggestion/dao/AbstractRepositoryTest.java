@@ -1,7 +1,5 @@
 package tech.nerddash.coursesuggestion.dao;
 
-
-
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
@@ -14,19 +12,11 @@ import org.junit.BeforeClass;
 
 import tech.nerddash.coursesuggestion.model.AbstractEntityClass;
 
-	
-
 public abstract class AbstractRepositoryTest {
 
 	protected static EntityManagerFactory emFactory;
 	protected static EntityManager em;
 	protected AbstractEntityClass entityObject;
-
-	protected enum DbLanguage {
-		MYSQL, H2
-	};
-
-	protected DbLanguage dbLanguage = DbLanguage.H2;
 
 	/**
 	 * Abrindo conexão com o Database, criando a EntityManager e abrindo a
@@ -35,7 +25,7 @@ public abstract class AbstractRepositoryTest {
 
 	@BeforeClass
 	public static void setUpBeforeClass() throws Exception {
-		emFactory = Persistence.createEntityManagerFactory("default");
+		emFactory = Persistence.createEntityManagerFactory("tests");
 		em = emFactory.createEntityManager();
 		em.getTransaction().begin();
 	}
@@ -58,27 +48,17 @@ public abstract class AbstractRepositoryTest {
 	}
 
 	protected void resetTable(AbstractEntityClass entityClass2) {
+		
 		String COLUMN_NAME = getColumnName(entityClass2);
+
 		Query query = em.createNativeQuery("DELETE FROM " + COLUMN_NAME + " WHERE id > 0;");
 		query.executeUpdate();
 
-		switch (dbLanguage) {
-		case MYSQL:
-			/*
-			 * Resetar o increment no MySQL
-			 */
-			query = em.createNativeQuery("ALTER TABLE " + COLUMN_NAME + " AUTO_INCREMENT = 1;");
-			query.executeUpdate();
-			break;
-
-		case H2:
-			/*
-			 * Resetar o increment no H2
-			 */
-			query = em.createNativeQuery("ALTER TABLE " + COLUMN_NAME + " ALTER COLUMN id RESTART WITH 1;");
-			query.executeUpdate();
-			break;
-		}
+		/*
+		 * Resetar o increment no H2
+		 */
+		query = em.createNativeQuery("ALTER TABLE " + COLUMN_NAME + " ALTER COLUMN id RESTART WITH 1;");
+		query.executeUpdate();
 
 	}
 
