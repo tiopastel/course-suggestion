@@ -104,7 +104,6 @@
 			<groupId>com.h2database</groupId>
 			<artifactId>h2</artifactId>
 			<version>1.4.196</version>
-			<scope>test</scope>
 		</dependency>
 
 		<!-- https://mvnrepository.com/artifact/mysql/mysql-connector-java -->
@@ -167,8 +166,6 @@
 				<configuration>
 					<source>1.8</source>
 					<target>1.8</target>
-					<compilerArgument>-parameters</compilerArgument>
-					<testCompilerArgument>-parameters</testCompilerArgument>
 				</configuration>
 			</plugin>
 			<plugin>

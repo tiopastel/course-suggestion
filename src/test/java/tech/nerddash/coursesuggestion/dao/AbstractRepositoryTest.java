@@ -25,7 +25,7 @@ public abstract class AbstractRepositoryTest {
 
 	@BeforeClass
 	public static void setUpBeforeClass() throws Exception {
-		emFactory = Persistence.createEntityManagerFactory("tests");
+		emFactory = Persistence.createEntityManagerFactory("default");
 		em = emFactory.createEntityManager();
 		em.getTransaction().begin();
 	}
@@ -43,7 +43,7 @@ public abstract class AbstractRepositoryTest {
 	@After
 	public void tearDown() throws Exception {
 		em.clear();
-		resetTable(this.entityObject);
+//		resetTable(this.entityObject);
 
 	}
 
