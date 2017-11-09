@@ -41,9 +41,9 @@ public abstract class AbstractRepositoryTest {
 	}
 
 	@After
-	public void tearDown() throws Exception {
+	public void tearDown() throws Exception {		
+		resetTable(this.entityObject);
 		em.clear();
-//		resetTable(this.entityObject);
 
 	}
 
