@@ -32,6 +32,9 @@ public class AbstractEntityClass implements Serializable {
 
 	@Column(columnDefinition = "TEXT")
 	protected String justification;
+	
+	//When I persist it on the database it starts the count of votes.
+	protected long votes = 1L;
 
 	public long getId() {
 		return id;
@@ -63,6 +66,14 @@ public class AbstractEntityClass implements Serializable {
 
 	public void setJustification(String justification) {
 		this.justification = justification;
+	}
+
+	public long getVotes() {
+		return votes;
+	}
+
+	public void setVotes(long votes) {
+		this.votes = votes;
 	}
 	
 }

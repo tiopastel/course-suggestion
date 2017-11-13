@@ -13,9 +13,11 @@ import br.com.caelum.vraptor.Get;
 import br.com.caelum.vraptor.Post;
 import br.com.caelum.vraptor.Put;
 import br.com.caelum.vraptor.Result;
+import br.com.caelum.vraptor.environment.Environment;
 import br.com.caelum.vraptor.validator.Validator;
 import tech.nerddash.coursesuggestion.dao.CourseDao;
 import tech.nerddash.coursesuggestion.model.Course;
+
 
 @Controller
 public class CourseController extends AbstractControllerClass<Course> {
@@ -23,20 +25,21 @@ public class CourseController extends AbstractControllerClass<Course> {
 	private final CourseDao dao;
 
 	@Inject
-	public CourseController(Validator validator, Result result, CourseDao dao) {
-		super(validator, result);
+	public CourseController(Environment environment, Validator validator, Result result, CourseDao dao) {
+		super(environment, validator, result);
 		this.dao = dao;
 	}
 
 	@Deprecated
 	public CourseController() {
-		this(null, null, null);
+		this(null, null, null, null);
 	}
 
 	@Get({ "/course", "/course/" })
 	public List<Course> list() {
 		List<Course> courses = dao.listAll(Course.class);
-		result.use(json()).from(courses).exclude("disciplines").serialize();
+		result.use(json()).from(courses).recursive().exclude("disciplines.course")
+				.exclude("disciplines.contents.discipline").serialize();
 		return courses;
 
 	}
@@ -50,7 +53,7 @@ public class CourseController extends AbstractControllerClass<Course> {
 
 	@Delete("/course/{course.id}")
 	public boolean delete(Course course) {
-		
+
 		if (dao.delete(course)) {
 			useJson(course);
 			return true;
@@ -78,9 +81,26 @@ public class CourseController extends AbstractControllerClass<Course> {
 		useJson(course);
 		return course;
 	}
-	
-	private void useJson(Course course) {
-		result.use(json()).from(course).recursive().exclude("disciplines.course").exclude("disciplines.contents.discipline").serialize();
+
+	@Get("/course/resetTable")
+	public void reset() {
+		
+		
+		this.testing = Boolean.parseBoolean(environment.get("testing"));
+		
+
+		if (testing) {
+			dao.resetTable(Course.class);
+			result.nothing();
+		} else {
+			result.notFound();
+		}
+
 	}
-	
+
+	private void useJson(Course course) {
+		result.use(json()).from(course).recursive().exclude("disciplines.course")
+				.exclude("disciplines.contents.discipline").serialize();
+	}
+
 }

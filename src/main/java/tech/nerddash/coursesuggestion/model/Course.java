@@ -1,6 +1,5 @@
 package tech.nerddash.coursesuggestion.model;
 
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -11,11 +10,9 @@ import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
 import javax.validation.constraints.NotNull;
 
-import com.google.gson.annotations.Expose;
-
 @Entity
 @Table(name = "COURSES", uniqueConstraints={@UniqueConstraint(columnNames={"name"})})
-public class Course extends AbstractEntityClass implements Serializable{
+public class Course extends AbstractEntityClass {
 
 	/**
 	 * 
@@ -25,7 +22,7 @@ public class Course extends AbstractEntityClass implements Serializable{
 	@NotNull
 	private Level level = Level.UPPER;
 	
-	@Expose(deserialize = false)
+	
 	@OneToMany(mappedBy = "course", fetch = FetchType.LAZY, orphanRemoval = true)
 	private List<Discipline> disciplines = new ArrayList<Discipline>();
 		

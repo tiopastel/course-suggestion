@@ -13,8 +13,10 @@ import br.com.caelum.vraptor.Get;
 import br.com.caelum.vraptor.Post;
 import br.com.caelum.vraptor.Put;
 import br.com.caelum.vraptor.Result;
+import br.com.caelum.vraptor.environment.Environment;
 import br.com.caelum.vraptor.validator.Validator;
 import tech.nerddash.coursesuggestion.dao.DisciplineDao;
+import tech.nerddash.coursesuggestion.model.Course;
 import tech.nerddash.coursesuggestion.model.Discipline;
 
 @Controller
@@ -23,20 +25,20 @@ public class DisciplineController extends AbstractControllerClass<Discipline> {
 	private final DisciplineDao dao;
 
 	@Inject
-	public DisciplineController(Validator validator, Result result, DisciplineDao dao) {
-		super(validator, result);
+	public DisciplineController(Environment environment, Validator validator, Result result, DisciplineDao dao) {
+		super(environment, validator, result);
 		this.dao = dao;
 	}
 
 	@Deprecated
 	public DisciplineController() {
-		this(null, null, null);
+		this(null, null, null, null);
 	}
 
 	@Get({ "/discipline", "/discipline/" })
 	public List<Discipline> list() {
 		List<Discipline> disciplines = dao.listAll(Discipline.class);
-		result.use(json()).from(disciplines).exclude("course.disciplines").serialize();
+		result.use(json()).from(disciplines).recursive().exclude("course.disciplines").exclude("contents.discipline").serialize();
 		return disciplines;
 
 	}
@@ -78,9 +80,25 @@ public class DisciplineController extends AbstractControllerClass<Discipline> {
 		useJson(discipline);
 		return discipline;
 	}
+	
+	@Get("/discipline/resetTable")
+	public void reset() {
+		
+		this.testing = Boolean.parseBoolean(environment.get("testing"));
+
+		if (testing) {
+			dao.resetTable(Discipline.class, Course.class);
+			result.nothing();
+		} else {
+			result.notFound();
+		}
+
+	}
 
 	private void useJson(Discipline discipline) {
 		result.use(json()).from(discipline).recursive().exclude("course.disciplines").exclude("contents.discipline").serialize();
 	}
+	
+	
 
 }

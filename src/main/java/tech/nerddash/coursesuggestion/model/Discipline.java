@@ -1,6 +1,5 @@
 package tech.nerddash.coursesuggestion.model;
 
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -9,17 +8,18 @@ import javax.persistence.FetchType;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
 
 @Entity
 @Table(name = "DICIPLINES")
-public class Discipline extends AbstractEntityClass implements Serializable {
+public class Discipline extends AbstractEntityClass {
 
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 902477685423812135L;
 
-
+	@NotNull
 	@ManyToOne
 	private Course course;
 	
