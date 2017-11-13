@@ -2,6 +2,7 @@ package tech.nerddash.coursesuggestion.dao;
 
 import static org.junit.Assert.assertEquals;
 
+import org.junit.After;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
@@ -34,9 +35,14 @@ public class CourseDaoTest extends AbstractRepositoryTest {
 
 		courseDao.insert(course);
 		
-		entityObject = course;
-		
 	}
+	
+	@After
+	public void tearDown() throws Exception {
+		courseDao.resetTable(Course.class);
+	}
+	
+
 
 	@Test
 	public void testaInsert() {

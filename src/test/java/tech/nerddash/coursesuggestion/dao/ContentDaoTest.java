@@ -78,15 +78,14 @@ public class ContentDaoTest extends AbstractRepositoryTest {
 
 		contentDao.insert(content);
 		
-		entityObject = content;
+		
 		
 	}
 	
 	@After
 	public void tearDown() throws Exception {
-		super.tearDown();
-		resetTable(discipline);
-		resetTable(course);
+		contentDao.resetTable(Content.class, Discipline.class, Course.class);
+		em.clear();
 
 	}
 
