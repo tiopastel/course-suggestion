@@ -10,7 +10,7 @@ public abstract class AbstractRestApiIT {
 	@BeforeClass
 	public static void setUpBeforeClass() throws Exception {
 
-		RestAssured.baseURI = "http://tomcat8:8080/tech.nerddash";
+		RestAssured.baseURI = "http://tomcat8:8888/tech.nerddash";
 
 	}
 
