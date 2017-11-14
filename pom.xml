@@ -271,38 +271,16 @@
 						</goals>
 					</execution>
 				</executions>
-				<!-- <configuration> -->
-				<!-- <container> -->
-				<!-- <containerId>tomcat8x</containerId> -->
-				<!-- <home>/home/rafael/Programas/apache-tomcat-8.5.4</home> -->
-				<!-- <home>${CATALINA_HOME}</home> -->
-				<!-- </container> -->
-				<!-- <configuration> -->
-				<!-- <type>existing</type> -->
-				<!-- <home>/home/rafael/Programas/apache-tomcat-8.5.4</home> -->
-				<!-- <home>${CATALINA_HOME}</home> -->
-				<!-- <properties> -->
-				<!-- <cargo.servlet.port>8080</cargo.servlet.port> -->
-				<!-- </properties> -->
-				<!-- </configuration> -->
-
 				<configuration>
 					<container>
 						<containerId>tomcat8x</containerId>
-						<zipUrlInstaller>
-							<url>http://repo1.maven.org/maven2/org/apache/tomcat/tomcat/8.5.23/tomcat-8.5.23.zip</url>
-							<downloadDir>${project.build.directory}/downloads</downloadDir>
-							<extractDir>${project.build.directory}/extracts</extractDir>
-						</zipUrlInstaller>
-						<output>${project.build.directory}/tomcat8x/container.log</output>
-						<append>false</append>
-						<log>${project.build.directory}/tomcat8x/cargo.log</log>
+						<home>${CATALINA_HOME}</home>
 					</container>
 					<configuration>
-						<type>standalone</type>
+						<type>existing</type>
+						<home>${CATALINA_HOME}</home>
 						<properties>
 							<cargo.servlet.port>8888</cargo.servlet.port>
-							<cargo.logging>high</cargo.logging>
 						</properties>
 					</configuration>
 				</configuration>
