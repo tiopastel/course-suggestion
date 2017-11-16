@@ -67,4 +67,11 @@ docker build -t $DOCKER_USERNAME/$DATABASE_NAME  .'''
     APPLICATION_NAME = 'course-suggestion'
     EMAIL_ADDRESS = 'arantesbarcelos@gmail.com'
   }
+  post {
+    failure {
+        mail to: 'arantesbarcelos@gmail.com',
+             subject: "Failed Pipeline: ${currentBuild.fullDisplayName}",
+             body: "Something is wrong with ${env.BUILD_URL}"
+    }
+}
 }
