@@ -31,21 +31,23 @@ echo \'Nothing to do done :)\''''
         stage('Application Docker Build') {
           environment {
             APPLICATION_NAME = 'course-suggestion'
+            DOCKER_USERNAME = 'tiopastel'
           }
           steps {
             sh '''echo \'####### Building application Dockerfile ######\'
 cd $JENKINS_HOME/Dockerfiles/Tomcat.8.5.23
-docker build -t $APPLICATION_NAME  .'''
+docker build -t $DOCKER_USERNAME/$APPLICATION_NAME  .'''
           }
         }
         stage('Database Docker Build') {
           environment {
             DATABASE_NAME = 'mariadb'
+            DOCKER_USERNAME = 'tiopastel'
           }
           steps {
             sh '''echo \'####### Building database Dockerfile ######\'
 cd $JENKINS_HOME/Dockerfiles/Mariadb
-docker build -t $DATABASE_NAME  .'''
+docker build -t $DOCKER_USERNAME/$DATABASE_NAME  .'''
           }
         }
       }
