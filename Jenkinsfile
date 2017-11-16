@@ -56,7 +56,7 @@ docker build -t $DOCKER_USERNAME/$DATABASE_NAME  .'''
     }
     stage('Success Email Notification') {
       steps {
-        mail(subject: '$APPLICATION_NAME done!', body: 'Your APPLICATION_NAME app was successfully build.')
+        mail(subject: '${APPLICATION_NAME} done!', body: 'Your ${APPLICATION_NAME} app was successfully build.', to: '${EMAIL_ADDRESS}')
       }
     }
   }
