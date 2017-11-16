@@ -20,7 +20,7 @@ mv * $JENKINS_HOME/Dockerfiles/Tomcat.8.5.23/ROOT/
       steps {
         sh '''echo \'####### Building application Dockerfile ######\'
 cd $JENKINS_HOME/Dockerfiles/Tomcat.8.5.23
-docker build -t nerddash/course-suggestion .'''
+docker build -t $JOB_NAME  .'''
       }
     }
   }
