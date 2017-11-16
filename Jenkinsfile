@@ -21,7 +21,8 @@ mv * $JENKINS_HOME/Dockerfiles/Tomcat.8.5.23/ROOT/
         stage('Database Docker Setup') {
           steps {
             sh '''echo \'####### Seting up database Dockerfile ######\'
-echo \'Nothing to do done :)\''''
+echo \'Loggin on Docker Hub ......\'
+docker login -u tiopastel -p parafi123'''
           }
         }
       }
@@ -48,6 +49,20 @@ docker build -t $DOCKER_USERNAME/$APPLICATION_NAME  .'''
             sh '''echo \'####### Building database Dockerfile ######\'
 cd $JENKINS_HOME/Dockerfiles/Mariadb
 docker build -t $DOCKER_USERNAME/$DATABASE_NAME  .'''
+          }
+        }
+      }
+    }
+    stage('Pushing Application Docker Image') {
+      parallel {
+        stage('Pushing Application Docker Image') {
+          steps {
+            sh 'docker push $DOCKER_USERNAME/$APPLICATION_NAME'
+          }
+        }
+        stage('Pushing Database Docker Image') {
+          steps {
+            sh 'docker push $DOCKER_USERNAME/$DATABASE_NAME'
           }
         }
       }
