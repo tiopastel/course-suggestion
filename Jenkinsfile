@@ -56,7 +56,7 @@ docker build -t $DOCKER_USERNAME/$DATABASE_NAME  .'''
     }
     stage('Success Email Notification') {
       steps {
-        emailext(subject: '$APPLICATION_NAME', to: 'arantesbarcelos@gmail.com', body: 'body content')
+        emailext(subject: '${APPLICATION_NAME}', to: 'arantesbarcelos@gmail.com', body: 'body content')
       }
     }
   }
