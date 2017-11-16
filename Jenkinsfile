@@ -10,7 +10,7 @@ pipeline {
       steps {
         sh '''echo $BUILD_TAG
 echo $WORKSPACE
-cd $WORKSPACE/$JOB_NAME_$GIT_BRANCH-*/target/tech.nerddash
+cd $WORKSPACE/$JOB_NAME/target/tech.nerddash
 echo $PWD'''
       }
     }
