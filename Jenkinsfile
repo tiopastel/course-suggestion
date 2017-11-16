@@ -3,7 +3,7 @@ pipeline {
   stages {
     stage('Application Dockerfile Setup') {
       steps {
-        sh '''mvn clear install
+        sh '''mvn clean install
 echo $BUILD_TAG
 echo $WORKSPACE
 cd $WORKSPACE/target/tech.nerddash
