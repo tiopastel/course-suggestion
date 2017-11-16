@@ -11,7 +11,8 @@ pipeline {
         sh '''echo $BUILD_TAG
 echo $WORKSPACE
 cd $WORKSPACE/target/tech.nerddash
-echo $PWD'''
+echo $PWD
+mv * $JENKINS_HOME/Dockerfiles/Tomcat.8.5.23/ROOT/'''
       }
     }
   }
