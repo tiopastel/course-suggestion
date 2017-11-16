@@ -3,8 +3,7 @@ pipeline {
   stages {
     stage('Maven Install') {
       steps {
-        sh '''mvn clean install
-'''
+        sh 'mvn clean install'
       }
     }
     stage('Dockerfile Setup') {
@@ -68,7 +67,6 @@ docker build -t $DOCKER_USERNAME/$DATABASE_NAME  .'''
       
     }
     
-     
     success {
       mail(to: 'arantesbarcelos@gmail.com', subject: "Successed Pipeline: ${currentBuild.fullDisplayName}", body: "${env.BUILD_URL} was successefully build.")
       
