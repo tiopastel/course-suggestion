@@ -59,7 +59,6 @@ docker build -t $DOCKER_USERNAME/$DATABASE_NAME  .'''
     DOCKER_PASSWORD = 'parafi123'
     DATABASE_NAME = 'mariadb'
     APPLICATION_NAME = 'course-suggestion'
-    EMAIL_ADDRESS = 'arantesbarcelos@gmail.com'
   }
   post {
     failure {
