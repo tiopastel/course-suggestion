@@ -54,12 +54,6 @@ docker build -t $DOCKER_USERNAME/$DATABASE_NAME  .'''
         }
       }
     }
-    stage('Success Email Notification') {
-      steps {
-        sh '''echo "some shit to fail"
-apk add fail_dude'''
-      }
-    }
   }
   environment {
     DOCKER_USERNAME = 'tiopastel'
