@@ -68,8 +68,9 @@ docker build -t $DOCKER_USERNAME/$DATABASE_NAME  .'''
       
     }
     
+     
     success {
-      mail(to: 'arantesbarcelos@gmail.com', subject: "Failed Pipeline: ${currentBuild.fullDisplayName}", body: "${env.BUILD_URL} was successefully build.")
+      mail(to: 'arantesbarcelos@gmail.com', subject: "Successed Pipeline: ${currentBuild.fullDisplayName}", body: "${env.BUILD_URL} was successefully build.")
       
     }
     
