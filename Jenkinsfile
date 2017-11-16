@@ -56,7 +56,7 @@ docker build -t $DOCKER_USERNAME/$DATABASE_NAME  .'''
     }
     stage('Success Email Notification') {
       steps {
-        emailext(subject: '${APPLICATION_NAME}', to: 'arantesbarcelos@gmail.com', body: 'body content')
+        emailext(subject: '${APPLICATION_NAME}', body: 'body content')
       }
     }
   }
@@ -69,9 +69,9 @@ docker build -t $DOCKER_USERNAME/$DATABASE_NAME  .'''
   }
   post {
     failure {
-        mail to: 'arantesbarcelos@gmail.com',
-             subject: "Failed Pipeline: ${currentBuild.fullDisplayName}",
-             body: "Something is wrong with ${env.BUILD_URL}"
+      mail(to: 'arantesbarcelos@gmail.com', subject: "Failed Pipeline: ${currentBuild.fullDisplayName}", body: "Something is wrong with ${env.BUILD_URL}")
+      
     }
-}
+    
+  }
 }
