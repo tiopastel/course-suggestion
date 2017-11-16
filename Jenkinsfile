@@ -7,33 +7,31 @@ pipeline {
 '''
       }
     }
-    stage('Application Dockerfile Setup') {
-      parallel {
-        stage('Application Dockerfile Setup') {
-          steps {
-            sh '''echo \'####### Seting up application Dockerfile ######\'
+    stage('Dockerfile Setup') {
+      steps {
+        sh '''echo \'Setting up some variables ....\'
+
+export DOCKER_USERNAME=tiopastel
+export DOCKER_PASSWORD=parafi123
+export DATABASE_NAME=mariadb
+export APPLICATION_NAME=course-suggestion
+
+echo \'Loggin on Docker Hub ......\'
+docker login -u tiopastel -p parafi123
+
+echo \'####### Seting up database Dockerfile ######\'
+touch $JENKINS_HOME/Dockerfiles/Mariadb/database/conf/my.cnf
+
+echo \'####### Seting up application Dockerfile ######\'
 cd $WORKSPACE/target/tech.nerddash
 rm -rf $JENKINS_HOME/Dockerfiles/Tomcat.8.5.23/ROOT/*
 mv * $JENKINS_HOME/Dockerfiles/Tomcat.8.5.23/ROOT/
 '''
-          }
-        }
-        stage('Database Docker Setup') {
-          steps {
-            sh '''echo \'####### Seting up database Dockerfile ######\'
-echo \'Loggin on Docker Hub ......\'
-docker login -u tiopastel -p parafi123'''
-          }
-        }
       }
     }
     stage('Application Docker Build') {
       parallel {
         stage('Application Docker Build') {
-          environment {
-            APPLICATION_NAME = 'course-suggestion'
-            DOCKER_USERNAME = 'tiopastel'
-          }
           steps {
             sh '''echo \'####### Building application Dockerfile ######\'
 cd $JENKINS_HOME/Dockerfiles/Tomcat.8.5.23
@@ -41,10 +39,6 @@ docker build -t $DOCKER_USERNAME/$APPLICATION_NAME  .'''
           }
         }
         stage('Database Docker Build') {
-          environment {
-            DATABASE_NAME = 'mariadb'
-            DOCKER_USERNAME = 'tiopastel'
-          }
           steps {
             sh '''echo \'####### Building database Dockerfile ######\'
 cd $JENKINS_HOME/Dockerfiles/Mariadb
