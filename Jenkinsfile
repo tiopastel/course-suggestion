@@ -8,7 +8,7 @@ pipeline {
     }
     stage('Application Dockerfile Setup') {
       steps {
-        sh 'echo TODO'
+        sh 'echo $BUILD_TAG'
       }
     }
   }
