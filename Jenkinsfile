@@ -19,7 +19,7 @@ mv * $JENKINS_HOME/Dockerfiles/Tomcat.8.5.23/ROOT/
     stage('Application Docker Build') {
       steps {
         sh '''echo \'####### Building application Dockerfile ######\'
-docker build -t nerddash/$JOB_NAME .'''
+docker build -t nerddash/$JOB_BASE_NAME .'''
       }
     }
   }
