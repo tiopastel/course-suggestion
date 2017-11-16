@@ -56,7 +56,7 @@ docker build -t $DOCKER_USERNAME/$DATABASE_NAME  .'''
     }
     stage('Success Email Notification') {
       steps {
-        mail(subject: '$APPLICATION_NAME done!', body: 'Your APPLICATION_NAME app was successfully build.', to: '$EMAIL_ADDRES')
+        mail(subject: '$APPLICATION_NAME done!', body: 'Your APPLICATION_NAME app was successfully build.')
       }
     }
   }
@@ -65,6 +65,6 @@ docker build -t $DOCKER_USERNAME/$DATABASE_NAME  .'''
     DOCKER_PASSWORD = 'parafi123'
     DATABASE_NAME = 'mariadb'
     APPLICATION_NAME = 'course-suggestion'
-    EMAIL_ADDRES = 'arantesbarcelos@gmail.com'
+    EMAIL_ADDRESS = 'arantesbarcelos@gmail.com'
   }
 }
