@@ -9,14 +9,7 @@ pipeline {
     }
     stage('Dockerfile Setup') {
       steps {
-        sh '''echo \'Setting up some variables ....\'
-
-export DOCKER_USERNAME=tiopastel
-export DOCKER_PASSWORD=parafi123
-export DATABASE_NAME=mariadb
-export APPLICATION_NAME=course-suggestion
-
-echo \'Loggin on Docker Hub ......\'
+        sh '''echo \'Loggin on Docker Hub ......\'
 docker login -u tiopastel -p parafi123
 
 echo \'####### Seting up database Dockerfile ######\'
@@ -61,5 +54,11 @@ docker build -t $DOCKER_USERNAME/$DATABASE_NAME  .'''
         }
       }
     }
+  }
+  environment {
+    DOCKER_USERNAME = 'tiopastel'
+    DOCKER_PASSWORD = 'parafi123'
+    DATABASE_NAME = 'mariadb'
+    APPLICATION_NAME = 'course-suggestion'
   }
 }
