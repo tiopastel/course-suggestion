@@ -9,8 +9,9 @@ pipeline {
     stage('Application Dockerfile Setup') {
       steps {
         sh '''echo $BUILD_TAG
-echo $ITEM_FULL_NAME
-echo $ITEM_ROOTDIR'''
+echo $WORKSPACE
+cd $WORKSPACE/$JOB_NAME_$GIT_BRANCH-*/target/tech.nerddash
+echo $PWD'''
       }
     }
   }
