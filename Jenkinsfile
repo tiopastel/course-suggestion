@@ -21,7 +21,7 @@ mv * $JENKINS_HOME/Dockerfiles/Tomcat.8.5.23/ROOT/
         stage('Database Docker Setup') {
           steps {
             sh '''echo \'####### Seting up database Dockerfile ######\'
-echo \'Nothing to be done :)\''''
+echo \'Nothing to do done :)\''''
           }
         }
       }
