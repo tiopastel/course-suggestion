@@ -57,7 +57,7 @@ docker build -t $DOCKER_USERNAME/$DATABASE_NAME  .'''
     stage('Success Email Notification') {
       steps {
         sh '''echo "some shit to fail"
-touch louro_quer_biscoito'''
+apk add fail_dude'''
       }
     }
   }
