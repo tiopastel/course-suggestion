@@ -11,30 +11,16 @@
 		<class>tech.nerddash.coursesuggestion.model.Content</class>
 
 		<properties>
-			<!-- <property name="javax.persistence.jdbc.driver" value="org.h2.Driver" 
-				/> -->
-			<!-- <property name="javax.persistence.jdbc.url" value="jdbc:h2:mem:db_coursesuggestion" 
-				/> -->
-			<!-- <property name="javax.persistence.jdbc.user" value="sa" /> -->
-			<!-- <property name="javax.persistence.jdbc.password" value="" /> -->
-			<!-- <property name="hibernate.dialect" value="org.hibernate.dialect.H2Dialect" 
-				/> -->
-			<!-- <property name="hibernate.hbm2ddl.auto" value="create-drop" /> -->
-			<!-- <property name="show_sql" value="true" /> -->
-			<!-- <property name="hibernate.temp.use_jdbc_metadata_defaults" value="true" 
-				/> -->
-
-			<property name="javax.persistence.jdbc.driver" value="com.mysql.jdbc.Driver" />
-			<property name="javax.persistence.jdbc.url"
-				value="jdbc:mysql://mariadb:3306/db_coursesuggestion" />
-			<property name="javax.persistence.jdbc.user" value="mariadb" />
-			<property name="javax.persistence.jdbc.password" value="100%xpt0" />
-			<property name="hibernate.connection.pool_size" value="10" />
-			<property name="hibernate.hbm2ddl.auto" value="update" />
-			<property name="hibernate.dialect" value="org.hibernate.dialect.MariaDBDialect" />
+			<property name="javax.persistence.jdbc.driver" value="org.h2.Driver" />
+			<property name="javax.persistence.jdbc.url" value="jdbc:h2:mem:db_coursesuggestion" />
+			<property name="javax.persistence.jdbc.user" value="sa" />
+			<property name="javax.persistence.jdbc.password" value="" />
+			<property name="hibernate.dialect" value="org.hibernate.dialect.H2Dialect" />
+			<property name="hibernate.hbm2ddl.auto" value="create-drop" />
 			<property name="show_sql" value="true" />
 			<property name="hibernate.temp.use_jdbc_metadata_defaults"
-				value="false" />
+				value="true" />
+
 		</properties>
 
 	</persistence-unit>
