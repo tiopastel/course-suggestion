@@ -12,7 +12,7 @@ pipeline {
 docker login -u tiopastel -p parafi123
 
 echo \'####### Seting up database Dockerfile ######\'
-touch $JENKINS_HOME/Dockerfiles/Mariadb/database/conf/my.cnf
+touch $JENKINS_HOME/Dockerfiles/Mariadb/my.cnf
 
 echo \'####### Seting up application Dockerfile ######\'
 cd $WORKSPACE/target/tech.nerddash
