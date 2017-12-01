@@ -2,6 +2,7 @@ package tech.nerddash.coursesuggestion.controller;
 
 import static br.com.caelum.vraptor.view.Results.json;
 
+import java.util.HashMap;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -17,7 +18,7 @@ import br.com.caelum.vraptor.environment.Environment;
 import br.com.caelum.vraptor.validator.Validator;
 import tech.nerddash.coursesuggestion.dao.CourseDao;
 import tech.nerddash.coursesuggestion.model.Course;
-
+import tech.nerddash.coursesuggestion.model.Course.Level;
 
 @Controller
 public class CourseController extends AbstractControllerClass<Course> {
@@ -38,7 +39,7 @@ public class CourseController extends AbstractControllerClass<Course> {
 	@Get({ "/course", "/course/" })
 	public List<Course> list() {
 		List<Course> courses = dao.listAll(Course.class);
-		result.use(json()).from(courses).recursive().exclude("disciplines.course")
+		result.use(json()).from(courses, "courses").recursive().exclude("disciplines.course")
 				.exclude("disciplines.contents.discipline").serialize();
 		return courses;
 
@@ -84,10 +85,8 @@ public class CourseController extends AbstractControllerClass<Course> {
 
 	@Get("/course/resetTable")
 	public void reset() {
-		
-		
+
 		this.testing = Boolean.parseBoolean(environment.get("testing"));
-		
 
 		if (testing) {
 			dao.resetTable(Course.class);
@@ -96,6 +95,19 @@ public class CourseController extends AbstractControllerClass<Course> {
 			result.notFound();
 		}
 
+	}
+
+	@Get("/course/levels")
+	public void levels() {
+
+		Level[] levels = Course.Level.values();
+		HashMap<String, String> hashMap = new HashMap<String, String>();
+
+		for (Level level : levels) {
+			hashMap.put(level.toString(), environment.get(level.toString().toLowerCase()));
+		}
+
+		result.use(json()).from(hashMap, "levels").recursive().serialize();
 	}
 
 	private void useJson(Course course) {
