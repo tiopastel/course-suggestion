@@ -2,6 +2,7 @@ package tech.nerddash.coursesuggestion.controller;
 
 import static br.com.caelum.vraptor.view.Results.json;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -16,6 +17,7 @@ import br.com.caelum.vraptor.Result;
 import br.com.caelum.vraptor.environment.Environment;
 import br.com.caelum.vraptor.validator.Validator;
 import tech.nerddash.coursesuggestion.dao.DisciplineDao;
+import tech.nerddash.coursesuggestion.model.Content;
 import tech.nerddash.coursesuggestion.model.Course;
 import tech.nerddash.coursesuggestion.model.Discipline;
 
@@ -35,7 +37,7 @@ public class DisciplineController extends AbstractControllerClass<Discipline> {
 		this(null, null, null, null);
 	}
 
-	@Get({ "/discipline", "/discipline/" })
+	@Get("/discipline")
 	public List<Discipline> list() {
 		List<Discipline> disciplines = dao.listAll(Discipline.class);
 		result.use(json()).from(disciplines, "disciplines").recursive().exclude("course.disciplines").exclude("contents.discipline").serialize();
@@ -94,11 +96,44 @@ public class DisciplineController extends AbstractControllerClass<Discipline> {
 		}
 
 	}
+	
+	@Get("/discipline/report")
+	public List<Discipline> disciplineReport() {
+
+		List<Discipline> disciplines = dao.listAll(Discipline.class);
+		ArrayList<ReportData> reportDataArray = new ArrayList<ReportData>();
+		
+		for (Discipline discipline : disciplines) {
+
+			ReportData reportData = new ReportData();
+			reportData.disciplineName = discipline.getName();
+
+
+				List<Content> contents = discipline.getContents();
+
+				for (@SuppressWarnings("unused")
+				Content content : contents) {
+					reportData.contents++;
+				}
+
+			reportDataArray.add(reportData);
+		}
+
+		result.use(json()).from(reportDataArray, "disciplines").recursive().serialize();
+		return disciplines;
+
+	}
 
 	private void useJson(Discipline discipline) {
 		result.use(json()).from(discipline).recursive().exclude("course.disciplines").exclude("contents.discipline").serialize();
 	}
 	
-	
+	private class ReportData {
+
+		@SuppressWarnings("unused")
+		private String disciplineName;
+		@SuppressWarnings("unused")
+		private int contents;
+	}
 
 }

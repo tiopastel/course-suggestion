@@ -14,7 +14,7 @@ import br.com.caelum.vraptor.jpa.JPATransactionInterceptor;
 
 @Intercepts(before = JPATransactionInterceptor.class)
 @RequestScoped
-public class JPAExceptionInterceptor {
+public class ExceptionInterceptor {
 	
 
 	private final Result result;
@@ -22,12 +22,12 @@ public class JPAExceptionInterceptor {
 
 	
 	@Deprecated
-	protected JPAExceptionInterceptor() {
+	protected ExceptionInterceptor() {
 		this(null);
 	}
 
 	@Inject
-	public JPAExceptionInterceptor(Result result) {
+	public ExceptionInterceptor(Result result) {
 		this.result = result;
 	}
 

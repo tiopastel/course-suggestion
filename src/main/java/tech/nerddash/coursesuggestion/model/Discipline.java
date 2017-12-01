@@ -31,6 +31,14 @@ public class Discipline extends AbstractEntityClass {
 		return course;
 	}
 
+	public List<Content> getContents() {
+		return contents;
+	}
+
+	public void setContents(List<Content> contents) {
+		this.contents = contents;
+	}
+
 	public void setCourse(Course course) {
 		this.course = course;
 	}
