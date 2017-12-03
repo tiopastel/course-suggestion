@@ -19,5 +19,6 @@ public class CourseDao extends AbstractDaoClass<Course> {
 		this(null);
 	}
 
+	
 
 }

@@ -2,6 +2,7 @@ package tech.nerddash.coursesuggestion.controller;
 
 import static br.com.caelum.vraptor.view.Results.json;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
@@ -17,8 +18,10 @@ import br.com.caelum.vraptor.Result;
 import br.com.caelum.vraptor.environment.Environment;
 import br.com.caelum.vraptor.validator.Validator;
 import tech.nerddash.coursesuggestion.dao.CourseDao;
+import tech.nerddash.coursesuggestion.model.Content;
 import tech.nerddash.coursesuggestion.model.Course;
 import tech.nerddash.coursesuggestion.model.Course.Level;
+import tech.nerddash.coursesuggestion.model.Discipline;
 
 @Controller
 public class CourseController extends AbstractControllerClass<Course> {
@@ -36,7 +39,7 @@ public class CourseController extends AbstractControllerClass<Course> {
 		this(null, null, null, null);
 	}
 
-	@Get({ "/course", "/course/" })
+	@Get("/course")
 	public List<Course> list() {
 		List<Course> courses = dao.listAll(Course.class);
 		result.use(json()).from(courses, "courses").recursive().exclude("disciplines.course")
@@ -105,6 +108,7 @@ public class CourseController extends AbstractControllerClass<Course> {
 
 		for (Level level : levels) {
 			hashMap.put(level.toString(), environment.get(level.toString().toLowerCase()));
+
 		}
 
 		result.use(json()).from(hashMap, "levels").recursive().serialize();
@@ -113,6 +117,49 @@ public class CourseController extends AbstractControllerClass<Course> {
 	private void useJson(Course course) {
 		result.use(json()).from(course).recursive().exclude("disciplines.course")
 				.exclude("disciplines.contents.discipline").serialize();
+	}
+
+	@Get("/course/report")
+	public List<Course> coursesReport() {
+
+		List<Course> courses = dao.listAll(Course.class);
+		ArrayList<ReportData> reportDataArray = new ArrayList<ReportData>();
+		for (Course course : courses) {
+
+			ReportData reportData = new ReportData();
+			reportData.courseName = course.getName();
+
+			List<Discipline> disciplines = course.getDisciplines();
+
+			for (Discipline discipline : disciplines) {
+
+				reportData.disciplines++;
+
+				List<Content> contents = discipline.getContents();
+
+				for (@SuppressWarnings("unused")
+				Content content : contents) {
+					reportData.contents++;
+				}
+
+			}
+
+			reportDataArray.add(reportData);
+		}
+
+		result.use(json()).from(reportDataArray, "courses").recursive().serialize();
+		return courses;
+
+	}
+
+	private class ReportData {
+
+		@SuppressWarnings("unused")
+		private String courseName;
+		@SuppressWarnings("unused")
+		private int disciplines;
+		@SuppressWarnings("unused")
+		private int contents;
 	}
 
 }

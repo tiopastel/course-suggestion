@@ -60,6 +60,23 @@ public abstract class AbstractDaoClass<E extends AbstractEntityClass> {
 		return typedQuery.getResultList();
 	}
 	
+	public List<E> mostVoted(Class<E> entityClass) {
+
+		CriteriaBuilder criteriaBuilder = em.getCriteriaBuilder();
+		CriteriaQuery<E> query = criteriaBuilder.createQuery(entityClass);
+
+		Root<E> root = query.from(entityClass);
+		Order[] orderBy = { criteriaBuilder.desc(root.get("votes")) };
+
+		query.select(root);
+
+		query.orderBy(orderBy);
+
+		TypedQuery<E> typedQuery = em.createQuery(query);
+
+		return typedQuery.getResultList();
+	}
+	
 	public void resetTable(Class<?> ... classes) {
 
 		for (Class<?> entityClass : classes) {
