@@ -7,7 +7,7 @@ import SuggestContent from './components/suggest-content/SuggestContent.vue';
 export const routes = [
     { path: '', component: Login, title: 'Login', show: false },
     { path: '/home', component: Home, title: 'Página Inicial', show: false },
-    { path: '/suggestcourse', component: SuggestCourse, title: 'Sugerir um curso', show: true },
-    { path: '/suggestdiscipline', component: SuggestDiscipline, title: 'Sugerir uma disciplina', show: true },
-    { path: '/suggestcontent', component: SuggestContent, title: 'Sugerir um conteúdo', show: true }
+    { path: '/suggestcourse', component: SuggestCourse, title: 'Sugerir curso', show: true },
+    { path: '/suggestdiscipline', component: SuggestDiscipline, title: 'Sugerir disciplina', show: true },
+    { path: '/suggestcontent', component: SuggestContent, title: 'Sugerir conteúdo', show: true }
 ];
