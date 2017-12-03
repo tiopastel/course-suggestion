@@ -1,6 +1,7 @@
 <template>
   <div>
     <h1>{{ title }}</h1>
+    <img :src="institutionImage.src" :alt="institutionImage.alt"/>
     <router-view></router-view>
   </div>
 </template>
@@ -11,8 +12,8 @@
       return {
         title: 'Sugestões para Cursos',
         institutionImage: {
-          src: '',
-          alt: ''
+          src: './src/assets/iftm-logo.png',
+          alt: 'Logo do IFTM Uberaba'
         }
       }
     }

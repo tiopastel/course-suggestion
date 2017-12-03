@@ -1,47 +1,21 @@
 <template>
   <div>
-    <p>{{ description }}</p>
-    <form>
-      <input v-validate:name="'required'" v-model="name" type="text" name="nome" placeholder="Nome"><br>
-      <span v-show="errors.has('nome')">{{ errors.first('nome') }}</span><br>
-      <input v-validate:email="'required|email'" v-model="email" type="text" name="e-mail" placeholder="E-mail"><br>
-      <span v-show="errors.has('e-mail')">{{ errors.first('e-mail') }}</span><br>
-      <vue-recaptcha ref="recaptcha" 
-        @verify="onVerify" 
-        @expired="onExpired" 
-        :sitekey="recaptchaSiteKey">
-      </vue-recaptcha>
-      <br>
-      <button type="button" :disabled="errors.count() > 0" @click="selectCourse()">Avançar</button>
-    </form>
+    <suggestion-menu :routes="routes"></suggestion-menu>
   </div>
 </template>
 
 <script>
-  import VueRecaptcha from 'vue-recaptcha';
+  import SuggestionMenu from '../shared/suggestion-menu/SuggestionMenu.vue';
+  import { routes } from '../../routes.js';
 
   export default {
-    components: { 'vue-recaptcha': VueRecaptcha },
+    components: {
+      'suggestion-menu': SuggestionMenu
+    },
     data() {
       return {
-        recaptchaSiteKey: '6LfbITcUAAAAAJ07pND9XkGBEBCdstWCdcpVGNGx',
-        description: 'Dê sugestões nos cursos do IFTM de Uberaba. Para começar insira seu nome e e-mail abaixo:',
-        name: '',
-        email: ''
-      }
-    },
-    methods: {
-      onVerify: function (response) {
-        console.log('Verify: ' + response)
-      },
-      onExpired: function () {
-        console.log('Expired')
-      },
-      resetRecaptcha () {
-        this.$refs.recaptcha.reset() // Direct call reset method
-      },
-      selectCourse() {
-        this.$router.push('selectCourse');
+        description: '',
+        routes
       }
     }
   }
