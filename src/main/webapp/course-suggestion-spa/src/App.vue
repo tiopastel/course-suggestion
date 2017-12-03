@@ -1,24 +1,34 @@
 <template>
-  <div>
-    <h1>{{ title }}</h1>
+  <b-container>
+    <suggestion-menu :routes="routes" v-if="showMenu"></suggestion-menu>
+    <br>
     <router-view></router-view>
-  </div>
+  </b-container>
 </template>
 
 <script>
+  import Menu from './components/shared/menu/Menu.vue';
+  import { routes } from './routes.js';
+
   export default {
+    components: {
+      'suggestion-menu': Menu
+    },
     data() {
       return {
-        title: 'Sugestões para Cursos',
-        institutionImage: {
-          src: '',
-          alt: ''
-        }
+        routes
+      }
+    },
+    computed: {
+      showMenu() {
+        return this.$route.path != '/';
       }
     }
   }
 </script>
 
-<style>
-
+<style scoped>
+  .container {
+    margin-top: 25px;
+  }
 </style>
