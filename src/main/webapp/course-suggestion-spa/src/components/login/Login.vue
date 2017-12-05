@@ -25,13 +25,13 @@
       </b-form-group>
 
       <b-form-row>
-        <b-col>
+        <!--b-col>
           <vue-recaptcha ref="recaptcha" 
             @verify="onVerify" 
             @expired="onExpired" 
             :sitekey="recaptchaSiteKey">
           </vue-recaptcha>
-        </b-col>
+        </b-col-->
         <b-col align-self="center" style="text-align: right;">
           <b-button type="button" variant="primary" @click="login()">Entrar</b-button>
         </b-col>
