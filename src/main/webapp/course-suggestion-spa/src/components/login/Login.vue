@@ -9,7 +9,7 @@
         <b-img :src="institutionImage.src" fluid :alt="institutionImage.alt" />
       </b-col>
     </b-row>
-    <b-form>
+    <b-form v-on:submit.prevent="onSubmit()">
       <b-form-group label="Nome:">
         <b-form-input v-validate:name="'required'" v-model="name" type="text" name="nome"></b-form-input>
         <b-alert variant="danger" :show="errors.has('nome')">
@@ -29,11 +29,11 @@
           <vue-recaptcha ref="recaptcha" 
             @verify="onVerify" 
             @expired="onExpired" 
-            :sitekey="recaptchaSiteKey">
+            :sitekey="recaptcha.siteKey">
           </vue-recaptcha>
         </b-col>
         <b-col align-self="center" style="text-align: right;">
-          <b-button type="button" variant="primary" @click="login()">Entrar</b-button>
+          <b-button type="submit" variant="primary" :disabled="isValid">Entrar</b-button>
         </b-col>
       </b-form-row>
     </b-form>
@@ -47,7 +47,11 @@
     components: { 'vue-recaptcha': VueRecaptcha },
     data() {
       return {
-        recaptchaSiteKey: '6LfbITcUAAAAAJ07pND9XkGBEBCdstWCdcpVGNGx',
+        recaptcha: {
+          siteKey: '6LfbITcUAAAAAJ07pND9XkGBEBCdstWCdcpVGNGx',
+          response: '',
+          hasExpired: true
+        },
         subtitle: 'Dê sugestões nos cursos do IFTM de Uberaba. Para começar insira seu nome e e-mail abaixo:',
         name: '',
         email: '',
@@ -60,16 +64,35 @@
     },
     methods: {
       onVerify: function (response) {
-        console.log('Verify: ' + response)
+        console.log('Verify: ' + response);
+        this.recaptcha.response = response;
+        this.recaptcha.hasExpired = false;
       },
       onExpired: function () {
-        console.log('Expired')
+        console.log('Expired');
+        this.recaptcha.hasExpired = true;
       },
       resetRecaptcha () {
         this.$refs.recaptcha.reset() // Direct call reset method
       },
-      login() {
-        this.$router.push('home');
+      onSubmit() {
+        /*let body = JSON.stringify(this.form);
+        let options = {'Content-Type': 'application/json'};
+        this.$http.post(constants.DEV_API_URL.concat('course'), body, options)
+          .then(data => {
+            this.success = true;
+            this.message = 'Curso cadastrado com sucesso';
+            this.$refs.modal.show();
+          }, error => {
+            console.log(error);
+            this.$refs.modal.show();
+          });*/
+          this.$router.push('home');
+      }
+    },
+    computed: {
+      isValid() {
+        return Object.keys(this.fields).some(key => this.fields[key].pristine || this.fields[key].invalid) || this.recaptcha.hasExpired;
       }
     }
   }
