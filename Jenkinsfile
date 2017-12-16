@@ -17,5 +17,6 @@ pipeline {
     DOCKERHUB_USERNAME = 'tiopastel'
     DATABASE_NAME = 'mariadb'
     APPLICATION_NAME = 'course-suggestion'
+    DOCKERHUB_PASSWORD = 'parafi123'
   }
 }
