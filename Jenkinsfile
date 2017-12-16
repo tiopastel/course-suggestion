@@ -14,7 +14,7 @@ pipeline {
     }
   }
   environment {
-    DOCKERHUB_USERNAME = 'parafi123'
+    DOCKERHUB_USERNAME = 'tiopastel'
     DATABASE_NAME = 'mariadb'
     APPLICATION_NAME = 'course-suggestion'
   }
