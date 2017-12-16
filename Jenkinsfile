@@ -68,4 +68,16 @@ docker build -t $DOCKERHUB_USERNAME/$DATABASE_NAME  .'''
     APPLICATION_NAME = 'course-suggestion'
     DOCKERHUB_PASSWORD = 'parafi123'
   }
+  post {
+    failure {
+      mail(to: 'arantesbarcelos@gmail.com', subject: "Failed Pipeline: ${currentBuild.fullDisplayName}", body: "Something is wrong with ${env.BUILD_URL}")
+      
+    }
+    
+    success {
+      mail(to: 'arantesbarcelos@gmail.com', subject: "Successed Pipeline: ${currentBuild.fullDisplayName}", body: "${env.BUILD_URL} was successefully build.")
+      
+    }
+    
+  }
 }
