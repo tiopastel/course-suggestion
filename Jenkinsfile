@@ -4,7 +4,7 @@ pipeline {
     stage('Maven Tests') {
       steps {
         sh 'mvn clean install'
-        sh 'echo $WORKSPACE'
+        sh 'ls $WORKSPACE'
       }
     }
     stage('Docker Setup') {
