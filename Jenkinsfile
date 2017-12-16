@@ -1,9 +1,9 @@
 pipeline {
   agent any
   stages {
-    stage('Test') {
+    stage('Maven Tests') {
       steps {
-        sh 'echo Hello Wolrd'
+        sh 'mvn clean install'
       }
     }
   }
