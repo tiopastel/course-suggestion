@@ -3,6 +3,9 @@ package tech.nerddash.coursesuggestion.controller;
 import static io.restassured.RestAssured.given;
 import static org.junit.Assert.assertEquals;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -18,6 +21,7 @@ public class ContentControllerIT extends AbstractRestApiIT {
 	private Discipline discipline;
 	private JsonPath retorno;
 	private Course course;
+	private List<Content> contents;
 
 	@Before
 	public void setUp() throws Exception {
@@ -56,7 +60,9 @@ public class ContentControllerIT extends AbstractRestApiIT {
 		content.setJustification("Docker is a tecnologie used in many applications in the actual development cenario.");
 
 		content.setDiscipline(discipline);
-
+		
+		contents = new ArrayList<Content>();
+		contents.add(content);
 	}
 
 	@After
@@ -77,7 +83,7 @@ public class ContentControllerIT extends AbstractRestApiIT {
 		assertEquals(1L, content.getId());
 		assertEquals("Docker", content.getName());
 
-		// GET
+		// GET BY ID
 
 		retorno = given().header("Accept", "application/json").contentType("application/json").body(content).expect()
 				.statusCode(200).when().get("/content/1").andReturn().jsonPath();
@@ -86,6 +92,14 @@ public class ContentControllerIT extends AbstractRestApiIT {
 
 		assertEquals(1L, content.getId());
 		assertEquals("Docker", content.getName());
+		
+		// GET ALL
+		
+		retorno = given().header("Accept", "application/json").contentType("application/json").body(contents).expect()
+				.statusCode(200).when().get("/content").andReturn().jsonPath();
+		
+		List<Content> resultado = retorno.getList("contents");
+		assertEquals(contents.size(), resultado.size());
 
 		// UPDATE
 
