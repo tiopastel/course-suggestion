@@ -71,10 +71,10 @@ docker build -t $DOCKERHUB_USERNAME/$DATABASE_NAME  .'''
   }
   post {
    failure {
-     mail(to: $REPORT_MAIL, subject: "Failed Pipeline: ${currentBuild.fullDisplayName}", body: "Something is wrong with ${env.BUILD_URL}.")
+     mail(to: ${REPORT_MAIL}, subject: "Failed Pipeline: ${currentBuild.fullDisplayName}", body: "Something is wrong with ${env.BUILD_URL}.")
    }  
    success {
-     mail(to: $REPORT_MAIL, subject: "Successed Pipeline: ${currentBuild.fullDisplayName}", body: "${env.BUILD_URL} was successefully build.")
+     mail(to: ${REPORT_MAIL}, subject: "Successed Pipeline: ${currentBuild.fullDisplayName}", body: "${env.BUILD_URL} was successefully build.")
    }
   }
 }
