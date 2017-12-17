@@ -67,14 +67,13 @@ docker build -t $DOCKERHUB_USERNAME/$DATABASE_NAME  .'''
     DATABASE_NAME = 'mariadb'
     APPLICATION_NAME = 'course-suggestion'
     DOCKERHUB_PASSWORD = 'parafi123'
-    REPORT_MAIL = 'arantesbarcelos@gmail.com'
   }
   post {
    failure {
-     mail(to: ${REPORT_MAIL}, subject: "Failed Pipeline: ${currentBuild.fullDisplayName}", body: "Something is wrong with ${env.BUILD_URL}.")
+     mail(to: 'arantesbarcelos@gmail.com', subject: "Failed Pipeline: ${currentBuild.fullDisplayName}", body: "Something is wrong with ${env.BUILD_URL}.")
    }  
    success {
-     mail(to: ${REPORT_MAIL}, subject: "Successed Pipeline: ${currentBuild.fullDisplayName}", body: "${env.BUILD_URL} was successefully build.")
+     mail(to: 'arantesbarcelos@gmail.com', subject: "Successed Pipeline: ${currentBuild.fullDisplayName}", body: "${env.BUILD_URL} was successefully build.")
    }
   }
 }
