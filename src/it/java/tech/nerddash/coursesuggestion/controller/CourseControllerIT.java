@@ -110,6 +110,13 @@ public class CourseControllerIT extends AbstractRestApiIT {
 		assertEquals(null, course.getName());
 		assertEquals(null, course.getDescription());
 		assertEquals(null, course.getJustification());
+		
+		// REPORT
+		
+		retorno = given().expect().statusCode(200).when().get("/course/report").andReturn().jsonPath();
+		
+		resultado = retorno.getList("courses");
+		assertEquals(0, resultado.size());
 	}
 
 }

@@ -106,6 +106,13 @@ public class DisciplineControllerIT extends AbstractRestApiIT {
 
 		assertEquals(1L, discipline.getId());
 		assertEquals(null, discipline.getName());
+		
+		// REPORT
+		
+		retorno = given().expect().statusCode(200).when().get("/discipline/report").andReturn().jsonPath();
+		
+		resultado = retorno.getList("disciplines");
+		assertEquals(0, resultado.size());
 	}
 
 }
