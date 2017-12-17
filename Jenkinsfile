@@ -17,7 +17,7 @@ pipeline {
         stage('Application Docker Setup') {
           steps {
             sh '''cd $WORKSPACE/target/tech.nerddash
-rm -rf $JENKINS_HOME/Dockerfiles/Tomgato/ROOT/*
+rm -rf $JENKINS_HOME/Dockerfiles/Tomcat/ROOT/*
 mv * $JENKINS_HOME/Dockerfiles/Tomcat/ROOT/
 touch $JENKINS_HOME/Dockerfiles/Tomcat/persistence.xml
 touch $JENKINS_HOME/Dockerfiles/Tomcat/web.xml'''
