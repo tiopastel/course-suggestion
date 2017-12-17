@@ -3,6 +3,9 @@ package tech.nerddash.coursesuggestion.controller;
 import static io.restassured.RestAssured.given;
 import static org.junit.Assert.assertEquals;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -15,6 +18,7 @@ public class CourseControllerIT extends AbstractRestApiIT {
 
 	private Course course;
 	private JsonPath retorno;
+	private List<Course> courses;
 
 	@Before
 	public void setUp() throws Exception {
@@ -30,7 +34,9 @@ public class CourseControllerIT extends AbstractRestApiIT {
 		course.setJustification("Becouse We can");
 
 		course.setLevel(Level.UPPER);
-
+		
+		courses = new ArrayList<Course>();
+		courses.add(course);
 	}
 
 	@After
@@ -55,7 +61,7 @@ public class CourseControllerIT extends AbstractRestApiIT {
 		retorno = given().header("Accept", "application/json").contentType("application/json").body(course).expect()
 				.statusCode(200).when().post("/course").andReturn().jsonPath();
 
-		// GET
+		// GET BY ID
 
 		retorno = given().header("Accept", "application/json").contentType("application/json").body(course).expect()
 				.statusCode(200).when().get("/course/1").andReturn().jsonPath();
@@ -65,6 +71,14 @@ public class CourseControllerIT extends AbstractRestApiIT {
 		assertEquals(1L, course.getId());
 		assertEquals("Web Development", course.getName());
 		assertEquals(Level.UPPER, course.getLevel());
+		
+		// GET ALL
+		
+		retorno = given().header("Accept", "application/json").contentType("application/json").body(courses).expect()
+				.statusCode(200).when().get("/course").andReturn().jsonPath();
+		
+		List<Course> resultado = retorno.getList("courses");
+		assertEquals(courses.size(), resultado.size());
 
 		// UPDATE
 

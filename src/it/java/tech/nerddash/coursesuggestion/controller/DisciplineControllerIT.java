@@ -3,6 +3,9 @@ package tech.nerddash.coursesuggestion.controller;
 import static io.restassured.RestAssured.given;
 import static org.junit.Assert.assertEquals;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -16,6 +19,7 @@ public class DisciplineControllerIT extends AbstractRestApiIT {
 	private Discipline discipline;
 	private JsonPath retorno;
 	private Course course;
+	private List<Discipline> disciplines;
 
 	@Before
 	public void setUp() throws Exception {
@@ -40,6 +44,9 @@ public class DisciplineControllerIT extends AbstractRestApiIT {
 		discipline = new Discipline();
 		discipline.setName("Server Implementation");
 		discipline.setCourse(course);
+		
+		disciplines = new ArrayList<Discipline>();
+		disciplines.add(discipline);
 	}
 
 	@After
@@ -60,7 +67,7 @@ public class DisciplineControllerIT extends AbstractRestApiIT {
 		assertEquals(1L, discipline.getId());
 		assertEquals("Server Implementation", discipline.getName());
 
-		// GET
+		// GET BY ID
 
 		retorno = given().header("Accept", "application/json").contentType("application/json").body(discipline).expect()
 				.statusCode(200).when().get("/discipline/1").andReturn().jsonPath();
@@ -69,6 +76,14 @@ public class DisciplineControllerIT extends AbstractRestApiIT {
 
 		assertEquals(1L, discipline.getId());
 		assertEquals("Server Implementation", discipline.getName());
+		
+		// GET ALL
+		
+		retorno = given().header("Accept", "application/json").contentType("application/json").body(disciplines).expect()
+				.statusCode(200).when().get("/discipline").andReturn().jsonPath();
+		
+		List<Discipline> resultado = retorno.getList("disciplines");
+		assertEquals(disciplines.size(), resultado.size());
 
 		// UPDATE
 
