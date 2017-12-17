@@ -2,10 +2,15 @@ package tech.nerddash.coursesuggestion.dao;
 
 import static org.junit.Assert.assertEquals;
 
+import java.util.Arrays;
+import java.util.List;
+
+import org.hibernate.HibernateException;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
+import org.junit.rules.ExpectedException;
 import org.mockito.junit.MockitoJUnit;
 import org.mockito.junit.MockitoRule;
 
@@ -13,11 +18,12 @@ import tech.nerddash.coursesuggestion.model.Course;
 
 public class CourseDaoTest extends AbstractRepositoryTest {
 
-	@Rule
-	public MockitoRule rule = MockitoJUnit.rule();
 	private CourseDao courseDao;
 	private Course course;
-
+	
+	@Rule
+	public MockitoRule rule = MockitoJUnit.rule();
+	
 	@Before
 	public void setUp() throws Exception {
 		
@@ -32,9 +38,7 @@ public class CourseDaoTest extends AbstractRepositoryTest {
 		/*
 		 * Insere ao início de cada testes
 		 */
-
 		courseDao.insert(course);
-		
 	}
 	
 	@After
@@ -42,8 +46,6 @@ public class CourseDaoTest extends AbstractRepositoryTest {
 		courseDao.resetTable(Course.class);
 	}
 	
-
-
 	@Test
 	public void testaInsert() {
 		assertEquals("Não foi inserido", "Web Development", courseDao.get(Course.class, 1L).getName());
@@ -52,30 +54,29 @@ public class CourseDaoTest extends AbstractRepositoryTest {
 	
 	@Test
 	public void testaUpdate() {
-		
 		course.setName("Database Development");
 		
 		course = courseDao.update(course);
 		
 		assertEquals("Não pode ser atualizado", "Database Development", courseDao.get(Course.class, 1L).getName());
-
 	}
 	
 	@Test
 	public void testaGet() {
-		
 		assertEquals("Não foi possível buscar.", "Web Development", courseDao.get(Course.class, 1L).getName());
-
 	}
 	
 	@Test
 	public void testaDelete() {
-		
-		
 		courseDao.delete(course);
 		
 		assertEquals("Não pode ser apagado", null, courseDao.get(Course.class, 1L));
-
 	}
 
+	@Test
+	public void testaListAll() {
+		List<Course> courses = courseDao.listAll(Course.class);
+		
+		assertEquals("Não foi possível buscar os cursos", Arrays.asList(course), courses);
+	}
 }

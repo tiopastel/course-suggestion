@@ -2,6 +2,9 @@ package tech.nerddash.coursesuggestion.dao;
 
 import static org.junit.Assert.assertEquals;
 
+import java.util.Arrays;
+import java.util.List;
+
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Rule;
@@ -12,8 +15,6 @@ import org.mockito.junit.MockitoRule;
 import tech.nerddash.coursesuggestion.model.Content;
 import tech.nerddash.coursesuggestion.model.Course;
 import tech.nerddash.coursesuggestion.model.Discipline;
-
-
 
 public class ContentDaoTest extends AbstractRepositoryTest {
 
@@ -123,4 +124,10 @@ public class ContentDaoTest extends AbstractRepositoryTest {
 
 	}
 
+	@Test
+	public void testaListAll() {
+		List<Content> contents = contentDao.listAll(Content.class);
+		
+		assertEquals("Não foi possível buscar os conteúdos", Arrays.asList(content), contents);
+	}
 }
