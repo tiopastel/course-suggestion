@@ -74,7 +74,6 @@ docker build -t $DOCKERHUB_USERNAME/$DATABASE_NAME  .'''
    }  
    success {
      mail(to: 'email@drres', subject: "Successed Pipeline: ${currentBuild.fullDisplayName}", body: "${env.BUILD_URL} was successefully build.")
-    
    }
   }
 }
