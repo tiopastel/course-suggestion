@@ -1,6 +1,11 @@
 package tech.nerddash.coursesuggestion.dao;
 
 import static org.junit.Assert.assertEquals;
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.*;
+
+import java.util.Arrays;
+import java.util.List;
 
 import org.junit.After;
 import org.junit.Before;
@@ -99,4 +104,31 @@ public class DisciplineDaoTest extends AbstractRepositoryTest {
 
 	}
 
+	@Test
+	public void testaListAll() {
+		List<Discipline> disciplines = disciplineDao.listAll(Discipline.class);
+		
+		assertEquals("Não foi possível buscar as disciplinas", Arrays.asList(discipline), disciplines);
+	}
+	
+	@Test
+	public void testaMostVoted() {
+		Discipline discipline = new Discipline();
+		discipline.setName("Back-end Development");
+		discipline.setDescription(
+				"Back-end development is a broad term for the work involved in developing a web site for the Internet (World Wide Web) or an intranet (a private network). Web development can range from developing the simplest static single page of plain text to the most complex web-based internet applications (or just 'web apps') electronic businesses, and social network services. A more comprehensive list of tasks to which web development commonly refers, may include web engineering, web design, web content development, client liaison, client-side/server-side scripting, web server and network security configuration, and e-commerce development. Among web professionals, \"web development\" usually refers to the main non-design aspects of building web sites: writing markup and coding. Most recently Web development has come to mean the creation of content management systems or CMS.");
+		discipline.setJustification("Becouse We can");
+		discipline.setVotes(3L);
+		discipline.setCourse(course);
+		
+		disciplineDao.insert(discipline);
+		
+		List<Discipline> resultList = disciplineDao.mostVoted(Discipline.class);
+		Discipline mostVotedDiscipline = resultList.get(0);
+		long votesMostVoted = mostVotedDiscipline.getVotes();
+		Discipline minusVotedDiscipline = resultList.get(resultList.size() - 1);
+		long votesMinusVoted = minusVotedDiscipline.getVotes();
+		
+		assertThat(votesMostVoted, greaterThan(votesMinusVoted));
+	}
 }
