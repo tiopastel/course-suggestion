@@ -1,5 +1,7 @@
 package tech.nerddash.coursesuggestion.dao;
 
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.greaterThan;
 import static org.junit.Assert.assertEquals;
 
 import java.util.Arrays;
@@ -129,5 +131,26 @@ public class ContentDaoTest extends AbstractRepositoryTest {
 		List<Content> contents = contentDao.listAll(Content.class);
 		
 		assertEquals("Não foi possível buscar os conteúdos", Arrays.asList(content), contents);
+	}
+	
+	@Test
+	public void testaMostVoted() {
+		Content content = new Content();
+		content.setName("Front-end Development");
+		content.setDescription(
+				"Front-end development is a broad term for the work involved in developing a web site for the Internet (World Wide Web) or an intranet (a private network). Web development can range from developing the simplest static single page of plain text to the most complex web-based internet applications (or just 'web apps') electronic businesses, and social network services. A more comprehensive list of tasks to which web development commonly refers, may include web engineering, web design, web content development, client liaison, client-side/server-side scripting, web server and network security configuration, and e-commerce development. Among web professionals, \"web development\" usually refers to the main non-design aspects of building web sites: writing markup and coding. Most recently Web development has come to mean the creation of content management systems or CMS.");
+		content.setJustification("Becouse We can");
+		content.setDiscipline(discipline);
+		content.setVotes(3L);
+		
+		contentDao.insert(content);
+		
+		List<Content> resultList = contentDao.mostVoted(Content.class);
+		Content mostVotedContent = resultList.get(0);
+		long votesMostVoted = mostVotedContent.getVotes();
+		Content minusVotedContent = resultList.get(resultList.size() - 1);
+		long votesMinusVoted = minusVotedContent.getVotes();
+		
+		assertThat(votesMostVoted, greaterThan(votesMinusVoted));
 	}
 }
